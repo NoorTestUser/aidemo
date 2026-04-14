@@ -1,0 +1,33 @@
+# Maven build output
+target/
+
+# Git files
+.git
+.gitignore
+
+# IDE / editor config
+.idea
+.vscode
+*.iml
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Environment & secrets (VERY IMPORTANT)
+.env
+*.pem
+*.key
+*.crt
+*.jks
+*.p12
+
+# Docker files not needed in image
+docker-compose.yml
+
+# Node / frontend (if present later)
+node_modules/
+npm-debug.log
