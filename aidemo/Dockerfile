@@ -5,15 +5,20 @@ FROM gradle:8.6-jdk21 AS build
 
 WORKDIR /app
 
-# Copy Gradle files first (cache optimization)
+# Copy Gradle wrapper + config
 COPY build.gradle* settings.gradle* gradlew ./
 COPY gradle ./gradle
+
+# ✅ FIX: give execute permission
+RUN chmod +x gradlew
+
+# Pre-download dependencies (optional but good)
 RUN ./gradlew build -x test || true
 
 # Copy source code
 COPY src ./src
 
-# Build JAR
+# Build the application
 RUN ./gradlew clean build -x test
 
 # ===============================
