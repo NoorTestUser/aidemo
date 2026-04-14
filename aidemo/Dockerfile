@@ -1,30 +1,29 @@
 # ===============================
-# Stage 1: Build the application
+# Stage 1: Build with Gradle
 # ===============================
-FROM maven:3.9-eclipse-temurin-21 AS build
+FROM gradle:8.6-jdk21 AS build
 
 WORKDIR /app
 
-# Copy pom.xml first for dependency caching
-COPY pom.xml .
-RUN mvn dependency:go-offline -B
+# Copy Gradle files first (cache optimization)
+COPY build.gradle* settings.gradle* gradlew ./
+COPY gradle ./gradle
+RUN ./gradlew build -x test || true
 
 # Copy source code
 COPY src ./src
 
-# Build the JAR
-RUN mvn clean package -DskipTests
+# Build JAR
+RUN ./gradlew clean build -x test
 
 # ===============================
-# Stage 2: Runtime image
+# Stage 2: Runtime
 # ===============================
 FROM eclipse-temurin:21-jre
 
 WORKDIR /app
 
-# Copy the built JAR
-COPY --from=build /app/target/*.jar app.jar
+COPY --from=build /app/build/libs/*.jar app.jar
 
 EXPOSE 8080
-
 ENTRYPOINT ["java", "-jar", "app.jar"]
