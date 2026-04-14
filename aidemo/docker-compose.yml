@@ -19,6 +19,7 @@ services:
     environment:
       SPRING_AI_OLLAMA_BASE_URL: http://ollama:11434
       SPRING_AI_OLLAMA_CHAT_OPTIONS_MODEL: tinyllama
+      JAVA_OPTS: "-Xms256m -Xmx512m"
 
 volumes:
   ollama_data:
