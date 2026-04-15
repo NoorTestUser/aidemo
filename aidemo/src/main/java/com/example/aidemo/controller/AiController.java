@@ -19,4 +19,9 @@ public class AiController {
     public String ask(@RequestParam String question){
         return aiService.ask(question);
     }
+
+    @GetMapping("/chat")
+    public String chat(@RequestParam String question){
+        return aiService.chat(question);
+    }
 }
