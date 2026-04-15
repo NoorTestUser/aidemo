@@ -45,7 +45,7 @@ public class AiService {
                 new OllamaChatRequest(MODEL, conversation);
 
         // Call Ollama
-        String OLLAMA_URL = "http://ollama:11434";
+        String OLLAMA_URL = "http://ollama:11434/api/chat";
         OllamaChatResponse response =
                 restTemplate.postForObject(
                         OLLAMA_URL,
