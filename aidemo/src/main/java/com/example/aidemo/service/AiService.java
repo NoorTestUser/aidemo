@@ -17,7 +17,7 @@ public class AiService {
     private final ChatClient chatClient;
 
 
-    private static final String MODEL = "phi3";
+    private static final String MODEL = "tinyllama";
 
     private final RestTemplate restTemplate = new RestTemplate();
     private final List<Message> conversation = new ArrayList<>();
