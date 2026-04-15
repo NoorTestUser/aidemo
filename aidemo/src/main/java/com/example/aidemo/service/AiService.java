@@ -14,9 +14,6 @@ import java.util.List;
 @Service
 public class AiService {
 
-    @Value("${spring.ai.ollama.base-url}")
-    private String OLLAMA_URL;
-
     private final ChatClient chatClient;
 
 
@@ -48,6 +45,7 @@ public class AiService {
                 new OllamaChatRequest(MODEL, conversation);
 
         // Call Ollama
+        String OLLAMA_URL = "http://ollama:11434";
         OllamaChatResponse response =
                 restTemplate.postForObject(
                         OLLAMA_URL,
