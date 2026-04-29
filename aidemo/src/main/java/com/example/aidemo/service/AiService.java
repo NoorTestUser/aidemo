@@ -23,11 +23,33 @@ public class AiService {
     private final List<Message> conversation = new ArrayList<>();
 
 
-    public AiService(ChatClient chatClient){
+    public AiService(ChatClient chatClient) {
         this.chatClient = chatClient;
     }
 
-    public String ask(String question){
+    public String ask(String question) {
+        return chatClient
+                .prompt(question)
+                .call()
+                .content();
+    }
+
+    public String askInHouseRAG(String context, String question) {
+
+        String prompt = """
+                You are a policy-bound assistant.
+                Answer ONLY using the context below.
+                If the answer is not present, say:
+                "Information is not available in the uploaded documents."
+                
+                Context:
+                %s
+                
+                Question:
+                %s
+                
+                Answer briefly.
+                """.formatted(context, question);
         return chatClient
                 .prompt(question)
                 .call()
