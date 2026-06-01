@@ -3,6 +3,8 @@ package com.example.aidemo.service;
 import com.example.aidemo.dto.OllamaChatRequest;
 import com.example.aidemo.dto.dto.OllamaChatResponse;
 import com.example.aidemo.model.Message;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,9 @@ public class AiService {
 
 
     private static final String MODEL = "tinyllama";
+
+    private static final Logger log = LoggerFactory.getLogger(AiService.class);
+
 
     private final RestTemplate restTemplate = new RestTemplate();
     private final List<Message> conversation = new ArrayList<>();
@@ -51,6 +56,10 @@ public class AiService {
                 
                 Answer briefly.
                 """.formatted(context, question);
+
+
+        log.info("RAG Prompt:\n{}", prompt);
+
         return chatClient
                 .prompt(prompt)
                 .call()
