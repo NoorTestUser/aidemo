@@ -37,6 +37,7 @@ public class AiService {
     public String askInHouseRAG(String context, String question) {
 
         String prompt = """
+                Act as memory bounded AI.
                 You are a policy-bound assistant.
                 Answer ONLY using the context below.
                 If the answer is not present, say:
@@ -51,7 +52,7 @@ public class AiService {
                 Answer briefly.
                 """.formatted(context, question);
         return chatClient
-                .prompt(question)
+                .prompt(prompt)
                 .call()
                 .content();
     }
