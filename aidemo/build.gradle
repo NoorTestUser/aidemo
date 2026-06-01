@@ -29,25 +29,33 @@ dependencies {
     implementation 'org.springframework.ai:spring-ai-starter-model-ollama'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-    // Core LangChain4j
-    implementation 'dev.langchain4j:langchain4j:0.30.0'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
-    // Ollama integration (chat + embeddings)
-    implementation 'dev.langchain4j:langchain4j-ollama:0.30.0'
-
-    // Chroma vector database
-    implementation 'dev.langchain4j:langchain4j-chroma:0.30.0'
+    implementation 'org.springframework.ai:spring-ai-starter-model-ollama'
+    implementation 'org.springframework.ai:spring-ai-starter-vector-store-simple'
+    implementation 'org.springframework.ai:spring-ai-vector-store'
 
 
-        // Core LangChain4j
-        implementation "dev.langchain4j:langchain4j:0.30.0"
-
-        // Ollama (chat + embeddings)
-        implementation "dev.langchain4j:langchain4j-ollama:0.30.0"
-
-        // ✅ Chroma Vector Store (THIS provides ChromaVectorStore)
-        implementation "dev.langchain4j:langchain4j-chroma:0.30.0"
-
+//    // Core LangChain4j
+//    implementation 'dev.langchain4j:langchain4j:0.30.0'
+//
+//    // Ollama integration (chat + embeddings)
+//    implementation 'dev.langchain4j:langchain4j-ollama:0.30.0'
+//
+//    // Chroma vector database
+//    implementation 'dev.langchain4j:langchain4j-chroma:0.30.0'
+//
+//
+//        // Core LangChain4j
+//        implementation "dev.langchain4j:langchain4j:0.30.0"
+//
+//        // Ollama (chat + embeddings)
+//        implementation "dev.langchain4j:langchain4j-ollama:0.30.0"
+//
+//        // ✅ Chroma Vector Store (THIS provides ChromaVectorStore)
+//        implementation "dev.langchain4j:langchain4j-chroma:0.30.0"
+//
 
 
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
