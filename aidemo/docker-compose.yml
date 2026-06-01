@@ -8,6 +8,16 @@ services:
       - "11434:11434"
     volumes:
       - ollama_data:/root/.ollama
+    # ✅ Auto-start + auto-pull model
+    command: >
+      sh -c "
+      ollama serve &
+      echo 'Waiting for Ollama to start...' &&
+      sleep 5 &&
+      ollama pull tinyllama &&
+      echo 'Model pulled successfully' &&
+      wait
+      "
 
   aidemo:
     build: .
