@@ -2,19 +2,26 @@ version: "3.9"
 
 services:
   ollama:
-    image: ollama/ollama
+    image: ollama/ollama:latest
     container_name: ollama
     ports:
       - "11434:11434"
     volumes:
       - ollama_data:/root/.ollama
+
+    # ✅ Override default entrypoint
     entrypoint: ["/bin/sh", "-c"]
+
+    # ✅ Start server + wait + auto-pull model
     command: |
       ollama serve &
-      echo "Waiting for Ollama..."
-      sleep 5
+      echo "Waiting for Ollama to start..."
+      until curl -s http://localhost:11434/api/tags > /dev/null; do
+        sleep 2
+      done
+      echo "Ollama is ready"
       ollama pull tinyllama
-      echo "Model ready"
+      echo "Model tinyllama ready"
       wait
 
   aidemo:
