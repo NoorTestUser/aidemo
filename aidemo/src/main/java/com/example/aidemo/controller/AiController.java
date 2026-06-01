@@ -40,19 +40,19 @@ public class AiController {
     }
 
 
-    @GetMapping("/ai/askRAG")
-    public String askRAG(@RequestParam String question) {
-
-        List<String> contextChunks = vectorStoreService.search(question);
-
-        if (contextChunks.isEmpty()) {
-            return "Information is not available in the uploaded documents.";
-        }
-
-        return aiService1.askWithContext(
-                String.join("\n", contextChunks),
-                question
-        );
-    }
+//    @GetMapping("/ai/askRAG")
+//    public String askRAG(@RequestParam String question) {
+//
+//        List<String> contextChunks = vectorStoreService.search(question);
+//
+//        if (contextChunks.isEmpty()) {
+//            return "Information is not available in the uploaded documents.";
+//        }
+//
+//        return aiService1.askWithContext(
+//                String.join("\n", contextChunks),
+//                question
+//        );
+//    }
 }
 
