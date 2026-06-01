@@ -9,20 +9,23 @@ services:
     volumes:
       - ollama_data:/root/.ollama
 
-    # ✅ Override default entrypoint
-    entrypoint: ["/bin/sh", "-c"]
+    # ✅ Force ONLY server mode (no shell tricks)
+    command: ["serve"]
 
-    # ✅ Start server + wait + auto-pull model
+  # ✅ separate one-time model downloader (clean solution)
+  ollama-init:
+    image: ollama/ollama:latest
+    depends_on:
+      - ollama
+    entrypoint: ["/bin/sh", "-c"]
     command: |
-      ollama serve &
-      echo "Waiting for Ollama to start..."
-      until curl -s http://localhost:11434/api/tags > /dev/null; do
+      echo "Waiting for Ollama..."
+      until curl -s http://ollama:11434/api/tags > /dev/null; do
         sleep 2
       done
-      echo "Ollama is ready"
+      echo "Pulling model..."
       ollama pull tinyllama
-      echo "Model tinyllama ready"
-      wait
+      echo "Done."
 
   aidemo:
     build: .
@@ -31,6 +34,7 @@ services:
       - "8080:8080"
     depends_on:
       - ollama
+      - ollama-init
     environment:
       SPRING_AI_OLLAMA_BASE_URL: http://ollama:11434
       SPRING_AI_OLLAMA_CHAT_OPTIONS_MODEL: tinyllama
