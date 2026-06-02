@@ -1,6 +1,6 @@
 package com.example.aidemo.controller;
 
-import com.example.aidemo.service.AIService1;
+//import com.example.aidemo.service.AIService1;
 import com.example.aidemo.service.AiService;
 import com.example.aidemo.service.DocumentStore;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,12 +14,12 @@ import java.util.List;
 @RequestMapping("/ai")
 public class AiController {
     private final AiService aiService;
-    private final AIService1 aiService1;
+//    private final AIService1 aiService1;
     private final DocumentStore documentStore;
 
-    public AiController(AiService aiService, AIService1 aiService1, DocumentStore documentStore) {
+    public AiController(AiService aiService, DocumentStore documentStore) {
         this.aiService = aiService;
-        this.aiService1 = aiService1;
+//        this.aiService1 = aiService1;
         this.documentStore = documentStore;
     }
 
