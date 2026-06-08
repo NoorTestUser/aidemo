@@ -1,6 +1,18 @@
 version: "3.9"
 
 services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: aidemo-postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: aidemo
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
   ollama:
     image: ollama/ollama:latest
     container_name: ollama
@@ -41,4 +53,5 @@ services:
       JAVA_OPTS: "-Xms256m -Xmx512m"
 
 volumes:
+  pgdata:
   ollama_data:
