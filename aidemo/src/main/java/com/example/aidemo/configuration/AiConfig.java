@@ -18,11 +18,13 @@ public class AiConfig {
     }
 
 
-    @Bean
-    public VectorStore vectorStore(EmbeddingModel embeddingModel) {
-        return SimpleVectorStore.builder(
-                embeddingModel)
-                .build();
-    }
+//
+//    @Bean
+//    public VectorStore vectorStore(EmbeddingModel embeddingModel) {
+//        return SimpleVectorStore.builder(
+//                embeddingModel)
+//                .build();
+//    }
+
 
 }
