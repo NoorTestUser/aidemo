@@ -26,19 +26,13 @@ services:
       - "11434:11434"
     volumes:
       - ollama_data:/root/.ollama
-    command: ["serve"]   # ✅ IMPORTANT (force server mode)
-    healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:11434/api/tags >/dev/null || exit 1"]
-      interval: 5s
-      timeout: 3s
-      retries: 20
-      start_period: 10s
+    command: ["serve"]
 
   ollama-init:
     image: ollama/ollama:latest
     depends_on:
       ollama:
-        condition: service_healthy
+        condition: service_started
     entrypoint: ["/bin/sh", "-c"]
     command: |
       echo "Waiting for Ollama..."
@@ -46,7 +40,7 @@ services:
         sleep 2
       done
       echo "Pulling models..."
-      ollama pull nomic-embed-text   # ✅ REQUIRED for embeddings
+      ollama pull nomic-embed-text
       echo "Done."
     volumes:
       - ollama_data:/root/.ollama
@@ -61,11 +55,11 @@ services:
       postgres:
         condition: service_healthy
       ollama:
-        condition: service_healthy
+        condition: service_started
       ollama-init:
         condition: service_completed_successfully
     environment:
-      SPRING_PROFILES_ACTIVE: groq     # ✅ IMPORTANT
+      SPRING_PROFILES_ACTIVE: groq
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/aidemo
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres
