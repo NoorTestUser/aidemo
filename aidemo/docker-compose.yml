@@ -26,6 +26,7 @@ services:
       - "11434:11434"
     volumes:
       - ollama_data:/root/.ollama
+    command: ["serve"]   # ✅ IMPORTANT (force server mode)
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost:11434/api/tags >/dev/null || exit 1"]
       interval: 5s
@@ -44,8 +45,8 @@ services:
       until curl -f http://ollama:11434/api/tags >/dev/null; do
         sleep 2
       done
-      echo "Pulling model..."
-      ollama pull tinyllama
+      echo "Pulling models..."
+      ollama pull nomic-embed-text   # ✅ REQUIRED for embeddings
       echo "Done."
     volumes:
       - ollama_data:/root/.ollama
@@ -64,8 +65,12 @@ services:
       ollama-init:
         condition: service_completed_successfully
     environment:
+      SPRING_PROFILES_ACTIVE: groq     # ✅ IMPORTANT
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/aidemo
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
       SPRING_AI_OLLAMA_BASE_URL: http://ollama:11434
-      SPRING_AI_OLLAMA_CHAT_OPTIONS_MODEL: tinyllama
+      SPRING_AI_OLLAMA_EMBEDDING_OPTIONS_MODEL: nomic-embed-text
       JAVA_OPTS: "-Xms256m -Xmx512m"
 
 volumes:
