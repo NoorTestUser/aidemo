@@ -59,7 +59,7 @@ services:
       ollama-init:
         condition: service_completed_successfully
     environment:
-      SPRING_PROFILES_ACTIVE: groq
+      SPRING_PROFILES_ACTIVE: local
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/aidemo
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres
